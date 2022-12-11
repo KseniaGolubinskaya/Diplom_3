@@ -11,22 +11,22 @@ public class RegisterPage {
     private final WebDriver driver;
 
     // локатор поля ввода "Имя"
-    private final By selectNameField = By.xpath("//label[text()='Имя']/following-sibling::input");
+    private final By nameField = By.xpath("//label[text()='Имя']/following-sibling::input");
 
     // локатор поля ввода "Email"
-    private final By selectEmailField = By.xpath("//label[text()='Email']/following-sibling::input");
+    private final By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
 
     // локатор поля ввода "Пароль"
-    private final By selectPasswordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
+    private final By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
 
     // локатор кнопки "Зарегистрироваться"
-    private final By selectRegisterButton = By.xpath("//button[text()='Зарегистрироваться']");
+    private final By registerButton = By.xpath("//button[text()='Зарегистрироваться']");
 
     // локатор кнопки "Войти"
-    private final By selectLoginButtonOnRegisterPage = By.xpath("//button[text()='Войти']");
+    private final By loginButton = By.xpath("//a[text()='Войти']");
 
     // локатор надписи "Некорректный пароль"
-    private final By selectIncorrectPasswordLabel = By.className("input__error");
+    private final By incorrectPasswordLabel = By.className("input__error");
 
     // конструктор класса RegisterPage
     public RegisterPage(WebDriver driver) {
@@ -37,35 +37,35 @@ public class RegisterPage {
      * Метод для заполнения поля "Имя"
      */
     public void setUsername(String username) {
-        driver.findElement(selectNameField).sendKeys(username);
+        driver.findElement(nameField).sendKeys(username);
     }
 
     /**
      * Метод для заполнения поля "Email"
      */
     public void setUserEmail(String email) {
-        driver.findElement(selectEmailField).sendKeys(email);
+        driver.findElement(emailField).sendKeys(email);
     }
 
     /**
      * Метод для заполнения поля "Пароль"
      */
     public void setUserPassword(String password) {
-        driver.findElement(selectPasswordField).sendKeys(password);
+        driver.findElement(passwordField).sendKeys(password);
     }
 
     /**
      * Метод нажатия на кнопку "Зарегистрироваться"
      */
     public void clickRegisterButton() {
-        driver.findElement(selectRegisterButton).click();
+        driver.findElement(registerButton).click();
     }
 
     /**
      * Метод нажатия на кнопку "Войти" на странице регистрации
      */
     public void clickSignInButton() {
-        driver.findElement(selectLoginButtonOnRegisterPage).click();
+        driver.findElement(loginButton).click();
     }
 
     /**
@@ -83,7 +83,7 @@ public class RegisterPage {
      */
     public String getIncorrectPasswordLabel() {
         new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(selectIncorrectPasswordLabel));
-        return driver.findElement(selectIncorrectPasswordLabel).getText();
+                .until(ExpectedConditions.visibilityOfElementLocated(incorrectPasswordLabel));
+        return driver.findElement(incorrectPasswordLabel).getText();
     }
 }

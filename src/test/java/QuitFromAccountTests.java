@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class QuitFromAccountTests {
     private WebDriver driver;
     private PersonalAccountPage personalAccountPage;
-    private SignInPage signInPage;
+    private LoginPage loginPage;
     private HomePage homePage;
     private final String result = "Вход";
 
@@ -22,9 +22,9 @@ public class QuitFromAccountTests {
         driver = new ChromeDriver(options);
         driver.get("https://stellarburgers.nomoreparties.site/");
         personalAccountPage = new PersonalAccountPage(driver);
-        signInPage = new SignInPage(driver);
+        loginPage = new LoginPage(driver);
         homePage.clickSignInAccountButton();
-        signInPage.login("apollo@yandex.ru", "qazWSX_12345");
+        loginPage.login("apollo@yandex.ru", "qazWSX_12345");
         homePage.clickPersonalAccountButton();
     }
 
@@ -40,6 +40,6 @@ public class QuitFromAccountTests {
     @Test
     public void loginWithSignInAccountSuccessTest() {
         personalAccountPage.clickQuitButton();
-        assertEquals(result, signInPage.getTitleLogin());
+        assertEquals(result, loginPage.getTitleLogin());
     }
 }

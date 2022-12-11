@@ -53,7 +53,7 @@ public class ParametrizedRegisterWithIncorrectPasswordTests {
      */
     @Test
     public void incorrectPasswordFailedTest() {
-        String email = RandomStringUtils.randomAlphabetic(10) + '@' + RandomStringUtils.randomAlphabetic(5) + '.' + RandomStringUtils.randomAlphabetic(3);
+        String email = TestsHelper.generateEmail();
         registerPage.register(userNameField, email, passwordField);
         assertEquals(result, registerPage.getIncorrectPasswordLabel());
     }

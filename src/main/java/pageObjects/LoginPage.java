@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class SignInPage {
+public class LoginPage {
     private final WebDriver driver;
 
     // локатор поля ввода "Email"
@@ -29,7 +29,7 @@ public class SignInPage {
     private final By titleLogin = By.xpath(".//h2[text()='Вход']");
 
     // конструктор класса LoginFromPersonalAccountPage
-    public SignInPage(WebDriver driver) {
+    public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 

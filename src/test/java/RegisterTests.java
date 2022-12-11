@@ -1,4 +1,3 @@
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -6,15 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pageObjects.RegisterPage;
-import pageObjects.SignInPage;
+import pageObjects.LoginPage;
 
 import static org.junit.Assert.assertEquals;
 
 public class RegisterTests {
     private WebDriver driver;
     private RegisterPage registerPage;
-    private SignInPage signInPage;
-    private final String result = "Вход";
+    private LoginPage loginPage;
+    private final String loginLabel = "Вход";
 
     @Before
     public void setUp() {
@@ -23,7 +22,7 @@ public class RegisterTests {
         driver = new ChromeDriver(options);
         driver.get("https://stellarburgers.nomoreparties.site/register");
         registerPage = new RegisterPage(driver);
-        signInPage = new SignInPage(driver);
+        loginPage = new LoginPage(driver);
     }
 
     @After
@@ -37,9 +36,9 @@ public class RegisterTests {
      */
     @Test
     public void successRegistrationTest() {
-        String email = RandomStringUtils.randomAlphabetic(10) + '@' + RandomStringUtils.randomAlphabetic(5) + '.' + RandomStringUtils.randomAlphabetic(3);
+        String email = TestsHelper.generateEmail();
         registerPage.register("Аполлинария", email, "qazWSX_12345");
-        signInPage.waitForLoadLoginPage();
-        assertEquals(result, signInPage.getTitleLogin());
+        loginPage.waitForLoadLoginPage();
+        assertEquals(loginLabel, loginPage.getTitleLogin());
     }
 }

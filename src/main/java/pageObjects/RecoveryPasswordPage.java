@@ -6,7 +6,8 @@ import org.openqa.selenium.WebDriver;
 public class RecoveryPasswordPage {
     private final WebDriver driver;
 
-    private final By SignInButton = By.className("Auth_link__1fOlj");
+    // Локатор кнопки "Войти"
+    private final By loginButton = By.xpath("//a[text()='Войти']");
 
     public RecoveryPasswordPage(WebDriver driver) {
         this.driver = driver;
@@ -15,7 +16,7 @@ public class RecoveryPasswordPage {
     /**
      * Метод нажатия на кнопку "Войти"
      */
-    public void clickSignInButton() {
-        driver.findElement(SignInButton).click();
+    public void clickLoginButton() {
+        driver.findElement(loginButton).click();
     }
 }

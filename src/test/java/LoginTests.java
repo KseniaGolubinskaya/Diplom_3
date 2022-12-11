@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pageObjects.HomePage;
-import pageObjects.SignInPage;
+import pageObjects.LoginPage;
 import pageObjects.RecoveryPasswordPage;
 import pageObjects.RegisterPage;
 
@@ -14,21 +14,30 @@ import static org.junit.Assert.assertEquals;
 public class LoginTests {
     private WebDriver driver;
     private RegisterPage registerPage;
-    private SignInPage signInPage;
+    private LoginPage loginPage;
     private HomePage homePage;
     private RecoveryPasswordPage recoveryPasswordPage;
-    private final String result = "Соберите бургер";
+    private final String makeOrderLabel = "Оформить заказ";
+    private String email;
+    private String password;
 
     @Before
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox", "--disable-dev-shm-usage"); //"--headless",
         driver = new ChromeDriver(options);
-        driver.get("https://stellarburgers.nomoreparties.site/");
         registerPage = new RegisterPage(driver);
-        signInPage = new SignInPage(driver);
+        loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
         recoveryPasswordPage = new RecoveryPasswordPage(driver);
+
+        // Создание пользователя
+        driver.get("https://stellarburgers.nomoreparties.site/register");
+        email = TestsHelper.generateEmail();
+        password = "qazWSX_12345";
+        registerPage.register("Аполлинария", email, password);
+        loginPage.waitForLoadLoginPage();
+        assertEquals("Вход", loginPage.getTitleLogin());
     }
 
     @After
@@ -42,9 +51,12 @@ public class LoginTests {
      */
     @Test
     public void loginWithSignInAccountSuccessTest() {
+        driver.get("https://stellarburgers.nomoreparties.site/");
         homePage.clickSignInAccountButton();
-        signInPage.login("apollo@yandex.ru", "qazWSX_12345");
-        assertEquals(result, homePage.isTitleConstructorBurger());
+        loginPage.waitForLoadLoginPage();
+        loginPage.login(email, password);
+        homePage.waitForLoadHomePage();
+        assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 
     /**
@@ -52,30 +64,37 @@ public class LoginTests {
      */
     @Test
     public void loginFromPersonalAccountSuccessTest() {
+        driver.get("https://stellarburgers.nomoreparties.site/");
         homePage.clickPersonalAccountButton();
-        signInPage.login("apollo@yandex.ru", "qazWSX_12345");
-        assertEquals(result, homePage.isTitleConstructorBurger());
+        loginPage.waitForLoadLoginPage();
+        loginPage.login(email, password);
+        homePage.waitForLoadHomePage();
+        assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 
     /**
      * Вход через кнопку "Войти" в форме регистрации
      */
     @Test
-    public void loginFromRegisterSuccessTest(){
-        homePage.clickPersonalAccountButton();
+    public void loginFromRegisterSuccessTest() {
+        driver.get("https://stellarburgers.nomoreparties.site/register");
         registerPage.clickSignInButton();
-        signInPage.login("apollo@yandex.ru", "qazWSX_12345");
-        assertEquals(result, homePage.isTitleConstructorBurger());
+        loginPage.waitForLoadLoginPage();
+        loginPage.login(email, password);
+        homePage.waitForLoadHomePage();
+        assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 
     /**
-     * вход через кнопку в форме восстановления пароля
+     * Вход через кнопку в форме восстановления пароля
      */
     @Test
-    public void loginFromRecoveryPasswordSuccessTest(){
-        homePage.clickPersonalAccountButton();
-        signInPage.clickRecoveryPasswordButton();
-        recoveryPasswordPage.clickSignInButton();
-        assertEquals(result, homePage.isTitleConstructorBurger());
+    public void loginFromRecoveryPasswordSuccessTest() {
+        driver.get("https://stellarburgers.nomoreparties.site/forgot-password");
+        recoveryPasswordPage.clickLoginButton();
+        loginPage.waitForLoadLoginPage();
+        loginPage.login(email, password);
+        homePage.waitForLoadHomePage();
+        assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 }

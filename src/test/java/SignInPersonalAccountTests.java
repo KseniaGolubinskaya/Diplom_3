@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pageObjects.HomePage;
 import pageObjects.PersonalAccountPage;
-import pageObjects.SignInPage;
+import pageObjects.LoginPage;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +14,7 @@ public class SignInPersonalAccountTests {
     private WebDriver driver;
     private HomePage homePage;
     private PersonalAccountPage personalAccountPage;
-    private SignInPage signInPage;
+    private LoginPage loginPage;
     private final String result = "Профиль";
 
     @Before
@@ -25,7 +25,7 @@ public class SignInPersonalAccountTests {
         driver.get("https://stellarburgers.nomoreparties.site/");
         homePage = new HomePage(driver);
         homePage.clickSignInAccountButton();
-        signInPage.login("apollo@yandex.ru", "qazWSX_12345");
+        loginPage.login("apollo@yandex.ru", "qazWSX_12345");
     }
 
     @After
