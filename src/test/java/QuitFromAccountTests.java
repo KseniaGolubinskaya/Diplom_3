@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +21,7 @@ public class QuitFromAccountTests {
     @Before
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", /*"--headless",*/ "--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         personalAccountPage = new PersonalAccountPage(driver);
         homePage = new HomePage(driver);
@@ -29,11 +30,11 @@ public class QuitFromAccountTests {
         constructorPage = new ConstructorPage(driver);
     }
 
-//    @After
-//    public void tearDown() {
-//        // Закрыть браузер
-//        driver.quit();
-//    }
+    @After
+    public void tearDown() {
+        // Закрыть браузер
+        driver.quit();
+    }
 
     /**
      * Выход из аккаунта по кнопке «Выход» в личном кабинете

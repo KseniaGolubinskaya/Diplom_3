@@ -15,13 +15,13 @@ public class ConstructorPage {
     private final By titleConstructorBurger = By.xpath("//h1[text()='Соберите бургер']");
 
     // Локатор раздела "Булки"
-    private final By sectionBuns = By.xpath("//span[text()='Булки']");
+    private final By sectionBuns = By.xpath("//span[text()='Булки']/parent::div");
 
     // Локатор раздела "Соусы"
-    private final By sectionSauces = By.xpath("//span[text()='Соусы']");
+    private final By sectionSauces = By.xpath("//span[text()='Соусы']/parent::div");
 
     // Локатор раздела "Начинки"
-    private final By sectionFillings = By.xpath("//span[text()='Начинки']");
+    private final By sectionFillings = By.xpath("//span[text()='Начинки']/parent::div");
 
     // Локатор надписи "Булки"
     private final By titleBuns = By.xpath("//h2[text()='Булки']");
@@ -67,22 +67,22 @@ public class ConstructorPage {
     /**
      * Метод обнаружения на странице надписи "Булки"
      */
-    public WebElement isTitleBuns() {
-        return driver.findElement(titleBuns);
+    public String getTitleBuns() {
+        return driver.findElement(titleBuns).getText();
     }
 
     /**
      * Метод обнаружения на странице надписи "Соусы"
      */
-    public WebElement isTitleSauces() {
-        return driver.findElement(titleSauces);
+    public String getTitleSauces() {
+        return driver.findElement(titleSauces).getText();
     }
 
     /**
      * Метод обнаружения на странице надписи "Начинки"
      */
-    public WebElement isTitleFillings() {
-        return driver.findElement(titleFillings);
+    public String getTitleFillings() {
+        return driver.findElement(titleFillings).getText();
     }
 
     /**

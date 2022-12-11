@@ -35,8 +35,9 @@ public class GoToSectionsTests {
      */
     @Test
     public void goToBunsSuccessTest() {
+        constructorPage.goToSectionSauces();
         constructorPage.goToSectionBuns();
-        assertEquals(resultBuns, constructorPage.isTitleBuns());
+        assertEquals(resultBuns, constructorPage.getTitleBuns());
     }
 
     /**
@@ -45,7 +46,7 @@ public class GoToSectionsTests {
     @Test
     public void goToSaucesSuccessTest() {
         constructorPage.goToSectionSauces();
-        assertEquals(resultSauces, constructorPage.isTitleSauces());
+        assertEquals(resultSauces, constructorPage.getTitleSauces());
     }
 
     /**
@@ -54,6 +55,6 @@ public class GoToSectionsTests {
     @Test
     public void goToFillingsSuccessTest() {
         constructorPage.goToSectionFillings();
-        assertEquals(resultFillings, constructorPage.isTitleFillings());
+        assertEquals(resultFillings, constructorPage.getTitleFillings());
     }
 }
