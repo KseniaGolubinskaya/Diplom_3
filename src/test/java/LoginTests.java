@@ -24,7 +24,7 @@ public class LoginTests {
     @Before
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage"); //"--headless",
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
         registerPage = new RegisterPage(driver);
         loginPage = new LoginPage(driver);

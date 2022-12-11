@@ -3,6 +3,10 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class PersonalAccountPage {
     private final WebDriver driver;
@@ -12,16 +16,16 @@ public class PersonalAccountPage {
     }
 
     // локатор кнопки "Конструктор"
-    private final By constructorButton = By.className("AppHeader_header__linkText__3q_va ml-2");
+    private final By constructorButton = By.xpath(".//p[text()='Конструктор']");
 
     // локатор логотипа Stellar Burgers
-    private final By logoStellarBurgers = By.xpath("AppHeader_header__linkText__3q_va ml-2");
+    private final By logoStellarBurgers = By.className("AppHeader_header__logo__2D0X2");
 
     // локатор кнопки "Выход"
-    private final By quitButton = By.xpath("Account_button__14Yp3 text text_type_main-medium text_color_inactive");
+    private final By quitButton = By.xpath(".//button[text()='Выход']");
 
     // Локатор надписи "Профиль"
-    private final By titleProfile = By.className("Account_link__2ETsJ text text_type_main-medium text_color_inactive Account_link_active__2opc9");
+    private final By titleProfile = By.xpath(".//a[text()='Профиль']");
 
     /**
      * Метод нажатия на кнопку "Конструктор"
@@ -47,7 +51,12 @@ public class PersonalAccountPage {
     /**
      * Метод обнаружения на странице надписи "Профиль"
      */
-    public WebElement isTitleProfile() {
-        return driver.findElement(titleProfile);
+    public String getTitleProfileLabel() {
+        return driver.findElement(titleProfile).getText();
+    }
+
+    public void waitForLoad() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(titleProfile));
     }
 }

@@ -11,13 +11,13 @@ public class LoginPage {
     private final WebDriver driver;
 
     // локатор поля ввода "Email"
-    private final By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
+    private final By emailField = By.xpath(".//label[text()='Email']/following-sibling::input");
 
     // локатор поля ввода "Пароль"
-    private final By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
+    private final By passwordField = By.xpath(".//label[text()='Пароль']/following-sibling::input");
 
     // локатор кнопки "Войти"
-    private final By signInButton = By.xpath("//button[text()='Войти']");
+    private final By signInButton = By.xpath(".//button[text()='Войти']");
 
     // локатор кнопки "Зарегистрироваться"
     private final By registerButton = By.xpath(".//a[@href='/register']");
@@ -51,7 +51,7 @@ public class LoginPage {
      * Метод нажатия на кнопку "Войти"
      */
     public void clickSignInButton() {
-        driver.findElement(signInButton).click();
+        DomHelper.findAndClick(signInButton, driver);
     }
 
     /**
