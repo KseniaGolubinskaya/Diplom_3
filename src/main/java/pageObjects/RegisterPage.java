@@ -2,24 +2,31 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class RegisterPage {
     private final WebDriver driver;
 
     // локатор поля ввода "Имя"
-    private final By selectNameField = By.xpath(".//label[(@class='input__placeholder text noselect text_type_main-default' and text() = «Имя»)]");
+    private final By selectNameField = By.xpath("//label[text()='Имя']/following-sibling::input");
 
     // локатор поля ввода "Email"
-    private final By selectEmailField = By.xpath(".//label[@value='Email']//input");
+    private final By selectEmailField = By.xpath("//label[text()='Email']/following-sibling::input");
 
     // локатор поля ввода "Пароль"
-    private final By selectPasswordField = By.xpath(".//label[@value='Пароль']//input");
+    private final By selectPasswordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
 
     // локатор кнопки "Зарегистрироваться"
-    private final By selectRegisterButton = By.linkText("Зарегистрироваться");
+    private final By selectRegisterButton = By.xpath("//button[text()='Зарегистрироваться']");
 
     // локатор кнопки "Войти"
-    private final By selectLoginButtonOnRegisterPage = By.linkText("Войти");
+    private final By selectLoginButtonOnRegisterPage = By.xpath("//button[text()='Войти']");
+
+    // локатор надписи "Некорректный пароль"
+    private final By selectIncorrectPasswordLabel = By.className("input__error");
 
     // конструктор класса RegisterPage
     public RegisterPage(WebDriver driver) {
@@ -64,10 +71,19 @@ public class RegisterPage {
     /**
      * Метод - шаг для регистрации
      */
-    public void register(String username, String email, String password){
+    public void register(String username, String email, String password) {
         setUsername(username);
         setUserEmail(email);
         setUserPassword(password);
         clickRegisterButton();
+    }
+
+    /**
+     * Метод обнаружения на странице сообщения "Некорректный пароль"
+     */
+    public String getIncorrectPasswordLabel() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(selectIncorrectPasswordLabel));
+        return driver.findElement(selectIncorrectPasswordLabel).getText();
     }
 }

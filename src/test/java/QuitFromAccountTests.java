@@ -40,6 +40,6 @@ public class QuitFromAccountTests {
     @Test
     public void loginWithSignInAccountSuccessTest() {
         personalAccountPage.clickQuitButton();
-        assertEquals(result, signInPage.isTitleLogin());
+        assertEquals(result, signInPage.getTitleLogin());
     }
 }

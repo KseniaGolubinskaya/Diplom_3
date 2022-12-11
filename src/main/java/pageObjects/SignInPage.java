@@ -2,19 +2,22 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class SignInPage {
     private final WebDriver driver;
 
     // локатор поля ввода "Email"
-    private final By emailField = By.xpath(".//label[@value='Email']//input");
+    private final By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
 
     // локатор поля ввода "Пароль"
-    private final By passwordField = By.xpath(".//label[@value='Пароль']//input");
+    private final By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
 
     // локатор кнопки "Войти"
-    private final By signInButton = By.className("button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa");
+    private final By signInButton = By.xpath("//button[text()='Войти']");
 
     // локатор кнопки "Зарегистрироваться"
     private final By registerButton = By.xpath(".//a[@href='/register']");
@@ -23,7 +26,7 @@ public class SignInPage {
     private final By recoveryPasswordButton = By.xpath(".//a[@href='/forgot-password']");
 
     // локатор надписи "Вход"
-    private final By titleLogin = By.className("Auth_login__3hAey");
+    private final By titleLogin = By.xpath(".//h2[text()='Вход']");
 
     // конструктор класса LoginFromPersonalAccountPage
     public SignInPage(WebDriver driver) {
@@ -54,7 +57,7 @@ public class SignInPage {
     /**
      * Метод - шаг для входа
      */
-    public void login(String email, String password){
+    public void login(String email, String password) {
         setUserEmail(email);
         setUserPassword(password);
         clickSignInButton();
@@ -77,7 +80,15 @@ public class SignInPage {
     /**
      * Метод обнаружения на странице надписи "Вход"
      */
-    public WebElement isTitleLogin() {
-        return driver.findElement(titleLogin);
+    public String getTitleLogin() {
+        return driver.findElement(titleLogin).getText();
+    }
+
+    /**
+     * Метод ожидания загрузки страницы логина
+     */
+    public void waitForLoadLoginPage() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(titleLogin));
     }
 }
