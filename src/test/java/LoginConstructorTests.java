@@ -4,30 +4,48 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pageObjects.ConstructorPage;
-import pageObjects.HomePage;
-import pageObjects.PersonalAccountPage;
-import pageObjects.LoginPage;
+import pageObjects.*;
 
 import static org.junit.Assert.assertEquals;
 
 public class LoginConstructorTests {
     private WebDriver driver;
+    private RegisterPage registerPage;
     private PersonalAccountPage personalAccountPage;
     private ConstructorPage constructorPage;
     private HomePage homePage;
     private LoginPage loginPage;
-    private final String result = "Соберите бургер";
+    private final String makeBurgerLabel = "Соберите бургер";
+    private final String loginLabel = "Вход";
+    private final String profileLabel = "Профиль";
 
     @Before
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
-        driver.get("https://stellarburgers.nomoreparties.site/");
+        homePage = new HomePage(driver);
+        registerPage = new RegisterPage(driver);
+        loginPage = new LoginPage(driver);
         personalAccountPage = new PersonalAccountPage(driver);
-        homePage.clickSignInAccountButton();
-        loginPage.login("apollo@yandex.ru", "qazWSX_12345");
+        constructorPage = new ConstructorPage(driver);
+
+        // Регистрация пользователя
+        driver.get("https://stellarburgers.nomoreparties.site/register");
+        String email = TestsHelper.generateEmail();
+        String password = "qazWSX_12345";
+        registerPage.register("Аполлинария", email, password);
+        loginPage.waitForLoad();
+        assertEquals(loginLabel, loginPage.getTitleLogin());
+
+        // Логин пользователя
+        loginPage.login(email, password);
+        homePage.waitForLoad();
+
+        // Переход в Личный кабинет
+        homePage.clickPersonalAccountButton();
+        personalAccountPage.waitForLoad();
+        assertEquals(profileLabel, personalAccountPage.getTitleProfileLabel());
     }
 
     @After
@@ -40,17 +58,19 @@ public class LoginConstructorTests {
      * Переход из личного кабинета в конструктор по клику на кнопку «Конструктор»
      */
     @Test
-    public void signInConstructorSuccessTest() {
+    public void loginConstructorSuccessTest() {
         personalAccountPage.clickConstructorButton();
-        assertEquals(result, constructorPage.isTitleConstructorBurger());
+        constructorPage.waitForLoad();
+        assertEquals(makeBurgerLabel, constructorPage.getConstructorBurgerTitle());
     }
 
     /**
      * Переход из личного кабинета в конструктор по клику на логотип Stellar Burgers
      */
     @Test
-    public void signInLogoSuccessTest() {
+    public void loginLogoSuccessTest() {
         personalAccountPage.clickLogoStellarBurgers();
-        assertEquals(result, constructorPage.isTitleConstructorBurger());
+        constructorPage.waitForLoad();
+        assertEquals(makeBurgerLabel, constructorPage.getConstructorBurgerTitle());
     }
 }

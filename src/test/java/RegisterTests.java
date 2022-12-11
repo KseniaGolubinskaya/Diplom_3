@@ -38,7 +38,7 @@ public class RegisterTests {
     public void successRegistrationTest() {
         String email = TestsHelper.generateEmail();
         registerPage.register("Аполлинария", email, "qazWSX_12345");
-        loginPage.waitForLoadLoginPage();
+        loginPage.waitForLoad();
         assertEquals(loginLabel, loginPage.getTitleLogin());
     }
 }

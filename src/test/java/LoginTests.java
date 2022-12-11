@@ -36,7 +36,7 @@ public class LoginTests {
         email = TestsHelper.generateEmail();
         password = "qazWSX_12345";
         registerPage.register("Аполлинария", email, password);
-        loginPage.waitForLoadLoginPage();
+        loginPage.waitForLoad();
         assertEquals("Вход", loginPage.getTitleLogin());
     }
 
@@ -53,9 +53,9 @@ public class LoginTests {
     public void loginWithSignInAccountSuccessTest() {
         driver.get("https://stellarburgers.nomoreparties.site/");
         homePage.clickSignInAccountButton();
-        loginPage.waitForLoadLoginPage();
+        loginPage.waitForLoad();
         loginPage.login(email, password);
-        homePage.waitForLoadHomePage();
+        homePage.waitForLoad();
         assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 
@@ -66,9 +66,9 @@ public class LoginTests {
     public void loginFromPersonalAccountSuccessTest() {
         driver.get("https://stellarburgers.nomoreparties.site/");
         homePage.clickPersonalAccountButton();
-        loginPage.waitForLoadLoginPage();
+        loginPage.waitForLoad();
         loginPage.login(email, password);
-        homePage.waitForLoadHomePage();
+        homePage.waitForLoad();
         assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 
@@ -79,9 +79,9 @@ public class LoginTests {
     public void loginFromRegisterSuccessTest() {
         driver.get("https://stellarburgers.nomoreparties.site/register");
         registerPage.clickSignInButton();
-        loginPage.waitForLoadLoginPage();
+        loginPage.waitForLoad();
         loginPage.login(email, password);
-        homePage.waitForLoadHomePage();
+        homePage.waitForLoad();
         assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 
@@ -92,9 +92,9 @@ public class LoginTests {
     public void loginFromRecoveryPasswordSuccessTest() {
         driver.get("https://stellarburgers.nomoreparties.site/forgot-password");
         recoveryPasswordPage.clickLoginButton();
-        loginPage.waitForLoadLoginPage();
+        loginPage.waitForLoad();
         loginPage.login(email, password);
-        homePage.waitForLoadHomePage();
+        homePage.waitForLoad();
         assertEquals(makeOrderLabel, homePage.getMakeOrderButton());
     }
 }

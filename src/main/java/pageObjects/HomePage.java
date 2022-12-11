@@ -47,7 +47,7 @@ public class HomePage {
     /**
      * Метод ожидания загрузки основной страницы
      */
-    public void waitForLoadHomePage() {
+    public void waitForLoad() {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(makeOrderButton));
     }

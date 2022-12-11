@@ -1,4 +1,3 @@
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -13,33 +12,54 @@ public class QuitFromAccountTests {
     private PersonalAccountPage personalAccountPage;
     private LoginPage loginPage;
     private HomePage homePage;
-    private final String result = "Вход";
+    private RegisterPage registerPage;
+    private ConstructorPage constructorPage;
+    private final String loginLabel = "Вход";
+    private final String profileLabel = "Профиль";
 
     @Before
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox", /*"--headless",*/ "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
-        driver.get("https://stellarburgers.nomoreparties.site/");
         personalAccountPage = new PersonalAccountPage(driver);
+        homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
-        homePage.clickSignInAccountButton();
-        loginPage.login("apollo@yandex.ru", "qazWSX_12345");
-        homePage.clickPersonalAccountButton();
+        registerPage = new RegisterPage(driver);
+        constructorPage = new ConstructorPage(driver);
     }
 
-    @After
-    public void tearDown() {
-        // Закрыть браузер
-        driver.quit();
-    }
+//    @After
+//    public void tearDown() {
+//        // Закрыть браузер
+//        driver.quit();
+//    }
 
     /**
      * Выход из аккаунта по кнопке «Выход» в личном кабинете
      */
     @Test
     public void loginWithSignInAccountSuccessTest() {
+        // Регистрация пользователя
+        driver.get("https://stellarburgers.nomoreparties.site/register");
+        String email = TestsHelper.generateEmail();
+        String password = "qazWSX_12345";
+        registerPage.register("Аполлинария", email, password);
+        loginPage.waitForLoad();
+        assertEquals(loginLabel, loginPage.getTitleLogin());
+
+        // Логин пользователя
+        loginPage.login(email, password);
+        homePage.waitForLoad();
+
+        // Переход в Личный кабинет
+        homePage.clickPersonalAccountButton();
+        personalAccountPage.waitForLoad();
+        assertEquals(profileLabel, personalAccountPage.getTitleProfileLabel());
+
+        // Выход из аккаунта
         personalAccountPage.clickQuitButton();
-        assertEquals(result, loginPage.getTitleLogin());
+        loginPage.waitForLoad();
+        assertEquals(loginLabel, loginPage.getTitleLogin());
     }
 }

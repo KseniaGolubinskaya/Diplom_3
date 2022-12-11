@@ -87,7 +87,7 @@ public class LoginPage {
     /**
      * Метод ожидания загрузки страницы логина
      */
-    public void waitForLoadLoginPage() {
+    public void waitForLoad() {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(titleLogin));
     }

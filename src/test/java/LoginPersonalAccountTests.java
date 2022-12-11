@@ -44,12 +44,12 @@ public class LoginPersonalAccountTests {
         String email = TestsHelper.generateEmail();
         String password = "qazWSX_12345";
         registerPage.register("Аполлинария", email, password);
-        loginPage.waitForLoadLoginPage();
+        loginPage.waitForLoad();
         assertEquals(loginLabel, loginPage.getTitleLogin());
 
         // Логин пользователя
         loginPage.login(email, password);
-        homePage.waitForLoadHomePage();
+        homePage.waitForLoad();
 
         // Переход в Личный кабинет
         homePage.clickPersonalAccountButton();

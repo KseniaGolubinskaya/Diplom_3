@@ -3,29 +3,34 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ConstructorPage {
     private final WebDriver driver;
+
     // Локатор надписи "Соберите бургер"
-    private final By titleConstructorBurger = By.className("class=text text_type_main-large mb-5 mt-10");
+    private final By titleConstructorBurger = By.xpath("//h1[text()='Соберите бургер']");
 
     // Локатор раздела "Булки"
-    private final By sectionBuns = By.xpath("");
+    private final By sectionBuns = By.xpath("//span[text()='Булки']");
 
     // Локатор раздела "Соусы"
-    private final By sectionSauces = By.xpath("");
+    private final By sectionSauces = By.xpath("//span[text()='Соусы']");
 
     // Локатор раздела "Начинки"
-    private final By sectionFillings = By.xpath("");
+    private final By sectionFillings = By.xpath("//span[text()='Начинки']");
 
     // Локатор надписи "Булки"
-    private final By titleBuns = By.className("text text_type_main-medium mb-6 mt-10");
+    private final By titleBuns = By.xpath("//h2[text()='Булки']");
 
     // Локатор надписи "Соусы"
-    private final By titleSauces = By.className("text text_type_main-medium mb-6 mt-10");
+    private final By titleSauces = By.xpath("//h2[text()='Соусы']");
 
     // Локатор надписи "Начинки"
-    private final By titleFillings = By.className("text text_type_main-medium mb-6 mt-10");
+    private final By titleFillings = By.xpath("//h2[text()='Начинки']");
 
     public ConstructorPage(WebDriver driver) {
         this.driver = driver;
@@ -55,8 +60,8 @@ public class ConstructorPage {
     /**
      * Метод обнаружения на странице надписи "Соберите бургер"
      */
-    public WebElement isTitleConstructorBurger() {
-        return driver.findElement(titleConstructorBurger);
+    public String getConstructorBurgerTitle() {
+        return driver.findElement(titleConstructorBurger).getText();
     }
 
     /**
@@ -78,5 +83,13 @@ public class ConstructorPage {
      */
     public WebElement isTitleFillings() {
         return driver.findElement(titleFillings);
+    }
+
+    /**
+     * Метод ожидания загрузки страницы
+     */
+    public void waitForLoad() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(titleBuns));
     }
 }
