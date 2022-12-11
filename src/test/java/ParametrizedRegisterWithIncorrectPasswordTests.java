@@ -4,8 +4,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import pageObjects.RegisterPage;
 
 import static org.junit.Assert.assertEquals;
@@ -34,9 +32,7 @@ public class ParametrizedRegisterWithIncorrectPasswordTests {
 
     @Before
     public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        driver = TestsHelper.getDriver();
         driver.get("https://stellarburgers.nomoreparties.site/register");
         registerPage = new RegisterPage(driver);
     }

@@ -2,8 +2,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import pageObjects.RegisterPage;
 import pageObjects.LoginPage;
 
@@ -17,9 +15,7 @@ public class RegisterTests {
 
     @Before
     public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        driver = TestsHelper.getDriver();
         driver.get("https://stellarburgers.nomoreparties.site/register");
         registerPage = new RegisterPage(driver);
         loginPage = new LoginPage(driver);
