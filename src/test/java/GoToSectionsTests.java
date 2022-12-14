@@ -33,7 +33,7 @@ public class GoToSectionsTests {
     public void goToBunsSuccessTest() {
         constructorPage.goToSectionSauces();
         constructorPage.goToSectionBuns();
-        assertEquals(resultBuns, constructorPage.getTitleBuns());
+        assertEquals(resultBuns, constructorPage.getSectionBunsSelected());
     }
 
     /**
@@ -42,7 +42,7 @@ public class GoToSectionsTests {
     @Test
     public void goToSaucesSuccessTest() {
         constructorPage.goToSectionSauces();
-        assertEquals(resultSauces, constructorPage.getTitleSauces());
+        assertEquals(resultSauces, constructorPage.getSectionSaucesSelected());
     }
 
     /**
@@ -51,6 +51,6 @@ public class GoToSectionsTests {
     @Test
     public void goToFillingsSuccessTest() {
         constructorPage.goToSectionFillings();
-        assertEquals(resultFillings, constructorPage.getTitleFillings());
+        assertEquals(resultFillings, constructorPage.getSectionFillingsSelected());
     }
 }

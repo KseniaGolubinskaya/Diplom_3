@@ -25,23 +25,6 @@ public class LoginConstructorTests {
         loginPage = new LoginPage(driver);
         personalAccountPage = new PersonalAccountPage(driver);
         constructorPage = new ConstructorPage(driver);
-
-        // Регистрация пользователя
-        driver.get("https://stellarburgers.nomoreparties.site/register");
-        String email = TestsHelper.generateEmail();
-        String password = "qazWSX_12345";
-        registerPage.register("Аполлинария", email, password);
-        loginPage.waitForLoad();
-        assertEquals(loginLabel, loginPage.getTitleLogin());
-
-        // Логин пользователя
-        loginPage.login(email, password);
-        homePage.waitForLoad();
-
-        // Переход в Личный кабинет
-        homePage.clickPersonalAccountButton();
-        personalAccountPage.waitForLoad();
-        assertEquals(profileLabel, personalAccountPage.getTitleProfileLabel());
     }
 
     @After
@@ -55,6 +38,9 @@ public class LoginConstructorTests {
      */
     @Test
     public void loginConstructorSuccessTest() {
+        TestsHelper.registerAndLoginUser(driver, registerPage, loginPage, homePage, loginLabel);
+        TestsHelper.goToProfile(homePage, personalAccountPage, profileLabel);
+
         personalAccountPage.clickConstructorButton();
         constructorPage.waitForLoad();
         assertEquals(makeBurgerLabel, constructorPage.getConstructorBurgerTitle());
@@ -65,6 +51,9 @@ public class LoginConstructorTests {
      */
     @Test
     public void loginLogoSuccessTest() {
+        TestsHelper.registerAndLoginUser(driver, registerPage, loginPage, homePage, loginLabel);
+        TestsHelper.goToProfile(homePage, personalAccountPage, profileLabel);
+
         personalAccountPage.clickLogoStellarBurgers();
         constructorPage.waitForLoad();
         assertEquals(makeBurgerLabel, constructorPage.getConstructorBurgerTitle());

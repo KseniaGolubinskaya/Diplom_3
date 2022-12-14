@@ -2,7 +2,6 @@ package pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,14 +22,14 @@ public class ConstructorPage {
     // Локатор раздела "Начинки"
     private final By sectionFillings = By.xpath("//span[text()='Начинки']/parent::div");
 
-    // Локатор надписи "Булки"
-    private final By titleBuns = By.xpath("//h2[text()='Булки']");
+    // Локатор выделенного раздела "Булки"
+    private final By sectionBunsSelected = By.xpath(".//div[contains(@class, 'tab_tab_type_current')]/span[text()='Булки']");
 
-    // Локатор надписи "Соусы"
-    private final By titleSauces = By.xpath("//h2[text()='Соусы']");
+    // Локатор выделенного раздела "Соусы"
+    private final By sectionSaucesSelected = By.xpath(".//div[contains(@class, 'tab_tab_type_current')]/span[text()='Соусы']");
 
-    // Локатор надписи "Начинки"
-    private final By titleFillings = By.xpath("//h2[text()='Начинки']");
+    // Локатор выделенного раздела "Начинки"
+    private final By sectionFillingsSelected = By.xpath(".//div[contains(@class, 'tab_tab_type_current')]/span[text()='Начинки']");
 
     public ConstructorPage(WebDriver driver) {
         this.driver = driver;
@@ -67,22 +66,22 @@ public class ConstructorPage {
     /**
      * Метод обнаружения на странице надписи "Булки"
      */
-    public String getTitleBuns() {
-        return driver.findElement(titleBuns).getText();
+    public String getSectionBunsSelected() {
+        return driver.findElement(sectionBunsSelected).getText();
     }
 
     /**
      * Метод обнаружения на странице надписи "Соусы"
      */
-    public String getTitleSauces() {
-        return driver.findElement(titleSauces).getText();
+    public String getSectionSaucesSelected() {
+        return driver.findElement(sectionSaucesSelected).getText();
     }
 
     /**
      * Метод обнаружения на странице надписи "Начинки"
      */
-    public String getTitleFillings() {
-        return driver.findElement(titleFillings).getText();
+    public String getSectionFillingsSelected() {
+        return driver.findElement(sectionFillingsSelected).getText();
     }
 
     /**
@@ -90,6 +89,6 @@ public class ConstructorPage {
      */
     public void waitForLoad() {
         new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(titleBuns));
+                .until(ExpectedConditions.visibilityOfElementLocated(sectionBunsSelected));
     }
 }

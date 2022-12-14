@@ -2,6 +2,12 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import pageObjects.HomePage;
+import pageObjects.LoginPage;
+import pageObjects.PersonalAccountPage;
+import pageObjects.RegisterPage;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestsHelper {
     private final static boolean useYandex = false;
@@ -19,4 +25,37 @@ public class TestsHelper {
         }
         return new ChromeDriver(options);
     }
+
+    /**
+     * Регистрация пользователя
+     */
+    public static EmailAndPassword registerUser(WebDriver driver, RegisterPage registerPage, LoginPage loginPage, String loginLabel){
+        driver.get("https://stellarburgers.nomoreparties.site/register");
+        String email = generateEmail();
+        String password = "qazWSX_12345";
+        registerPage.register("Аполлинария", email, password);
+        loginPage.waitForLoad();
+        assertEquals(loginLabel, loginPage.getTitleLogin());
+        return new EmailAndPassword(email, password);
+    }
+
+    /**
+     * Регистрация и логин пользователя
+     */
+    public static void registerAndLoginUser(WebDriver driver, RegisterPage registerPage, LoginPage loginPage, HomePage homePage, String loginLabel){
+        EmailAndPassword emailAndPassword = registerUser(driver, registerPage, loginPage, loginLabel);
+        loginPage.login(emailAndPassword.getEmail(), emailAndPassword.getPassword());
+        homePage.waitForLoad();
+    }
+
+    /**
+     * Переход в Личный кабинет
+     */
+    public static void goToProfile(HomePage homePage, PersonalAccountPage personalAccountPage, String profileLabel) {
+        homePage.clickPersonalAccountButton();
+        personalAccountPage.waitForLoad();
+        assertEquals(profileLabel, personalAccountPage.getTitleProfileLabel());
+    }
+
+
 }
